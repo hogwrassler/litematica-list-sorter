@@ -43,6 +43,7 @@ with open(os.path.join(os.getcwd(), 'block-data', 'order.csv'), 'r') as orderFil
     reader = csv.reader(orderFile)
     for row in reader:
         orderDict[row[0]] = row[1]
+    print(orderDict)
 
 # organize items by block family and calculate stack/shulker counts
 for item in itemList:
@@ -50,6 +51,9 @@ for item in itemList:
     if matchingBlocks:
         item['stackSize'] = matchingBlocks[0]['stackSize']
         item['order'] = orderDict[matchingBlocks[0]['family']]
+        print(item['item'])
+        print(matchingBlocks[0]['family'])
+        print(item['order'])
     else:
         item['stackSize'] = 64
         item['order'] = orderDict['etc']
@@ -59,7 +63,7 @@ for item in itemList:
     shulkerCount = stackCount / 27
     item['shulkers'] = 0 if shulkerCount < 1 else math.ceil(shulkerCount)
 
-sortedItemList = sorted(itemList, key=lambda x: x['order'])
+sortedItemList = sorted(itemList, key=lambda x: int(x['order']))
 
 # create lists folder
 fileName = ntpath.basename(sys.argv[1]).replace('.txt', '_sorted.csv')

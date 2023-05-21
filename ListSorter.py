@@ -31,26 +31,35 @@ with open(sys.argv[1], newline='') as materialFile:
     itemList.pop(0)
     itemList.pop(0)
     itemList.pop(-1)
-        
-with open("blockdata.json", 'r') as f:
-    blocklist = json.load(f)
+
+
+
+with open(os.path.join(os.getcwd(), 'block-data', 'blockdata.json'), 'r') as blockDataFile:
+    blocklist = json.load(blockDataFile)
+
+
+with open(os.path.join(os.getcwd(), 'block-data', 'order.csv'), 'r') as orderFile:
+    orderDict = {}
+    reader = csv.reader(orderFile)
+    for row in reader:
+        orderDict[row[0]] = row[1]
 
 # organize items by block family and calculate stack/shulker counts
 for item in itemList:
     matchingBlocks = list(filter(lambda block: block['displayName'] == item['item'], blocklist))
     if matchingBlocks:
         item['stackSize'] = matchingBlocks[0]['stackSize']
-        item['family'] = matchingBlocks[0]['family']
+        item['order'] = orderDict[matchingBlocks[0]['family']]
     else:
         item['stackSize'] = 64
-        item['family'] = 'etc'
+        item['order'] = orderDict['etc']
         print("no match for " + item['item'])
     stackCount = int(item['count']) / item['stackSize']
     item['stacks'] = 0 if stackCount < 1 else math.ceil(stackCount)
     shulkerCount = stackCount / 27
     item['shulkers'] = 0 if shulkerCount < 1 else math.ceil(shulkerCount)
 
-sortedItemList = sorted(itemList, key=lambda x: x['family'])
+sortedItemList = sorted(itemList, key=lambda x: x['order'])
 
 # create lists folder
 fileName = ntpath.basename(sys.argv[1]).replace('.txt', '_sorted.csv')

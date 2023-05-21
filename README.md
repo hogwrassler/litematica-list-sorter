@@ -1,6 +1,6 @@
 # litematica-list-sorter
 
-pass in a litematica material list and receive a sorted csv, grouped in order described below, with the total count, # stacks, # shulkers needed
+pass in a litematica material list and receive a sorted csv, grouped in order set by block-data/order.csv, with the total count, # stacks, # shulkers needed
 
 How to use:
 Must have python installed for use (https://www.python.org/downloads/)
@@ -9,51 +9,5 @@ Open command prompt, navigate to this repo and enter:
 
 The sorted list will be output to the lists folder within this repo as a .csv.
 
-Sort Order, alphabetically within:
-concrete
-terracotta
-wool
-glass
-acacia
-birch
-cherry
-crimson
-dark oak
-jungle
-mangrove
-oak
-spruce
-warped
-andesite
-basalt
-blackstone
-bricks
-calcite
-copper
-deepslate
-dripstone
-end
-granite
-mud
-mushroom
-nether bricks
-obsidian
-prismarine
-purpur
-quartz
-stone
-sand
-red sandstone
-redstone
-ores
-dirt
-plants
-iron
-lighting
-bee stuff
-sea stuff
-shulker
-cold stuff
-sculk
-amethyst
-job blocks, etc
+To modify the order of block families, you can modify block-data/order.csv.
+To modify the families of specific blocks, you can modify blockdata.json, replacing the "family" value with your choice from the options in order.csv.
